@@ -19,8 +19,20 @@ class Board implements Ilayout, Cloneable {
     }
 
     public String toString() {
+        String  str = "";
+        for(int i = 0; i < dim; i ++){
+            for (int j = 0; j < dim; j++){
+                if (board[i][j] == 0){
+                    str += " ";
+                }else{
+                    str += board[i][j];
+                }
+            }
+            str += "\n";
+        }
         // TODO: Three rows, 0 as a space, newline after each row.
-        throw new UnsupportedOperationException("TODO: toString");
+
+        return str;
     }
 
     public boolean equals(Object o) {
