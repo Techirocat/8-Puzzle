@@ -28,9 +28,8 @@ class Board implements Ilayout, Cloneable {
                     str += board[i][j];
                 }
             }
-            str += "\n";
+            str += System.lineSeparator(); // Usar isto em vex de \n, pois o prof pede
         }
-        // TODO: Three rows, 0 as a space, newline after each row.
 
         return str;
     }
