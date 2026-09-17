@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 class Board implements Ilayout, Cloneable {
@@ -61,15 +62,7 @@ class Board implements Ilayout, Cloneable {
     }
 
     public int hashCode() {
-        int hash = 1;
-        for (int i = 0; i < dim; i++) {
-            for (int j = 0; j < dim; j++) {
-                hash *= 10;
-                hash += board[i][j];
-            }
-        }
-
-        return hash;
+        return Arrays.deepHashCode(board);
     }
 
     // These three stubs make explicit the methods required by Ilayout.
@@ -160,8 +153,8 @@ class Board implements Ilayout, Cloneable {
         try{
             Board board = (Board) this.clone();
 
-            board.board[xO][yO] = board.board[xD][yD];
-            board.board[xD][yD] = 0;
+            board.board[yO][xO] = board.board[yD][xD];
+            board.board[yD][xD] = 0;
 
             return board;
         } catch (CloneNotSupportedException e) {

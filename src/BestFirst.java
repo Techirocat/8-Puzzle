@@ -45,12 +45,38 @@ class BestFirst {
 
     final public Iterator<State> solve(Ilayout s, Ilayout goal) {
         objective = goal;
-        abertos = new PriorityQueue<>(10,
-            (s1, s2) -> (int) Math.signum(s1.getG() - s2.getG()));
+
+        // Elementos organizados por menor valor de g
+        abertos = new PriorityQueue<>(10, (s1, s2) -> (int) Math.signum(s1.getG() - s2.getG()));
         fechados = new HashMap<>();
         abertos.add(new State(s, null));
         List<State> sucs;
-        // TODO: Complete the search using the diagram in the guide.
-        throw new UnsupportedOperationException("TODO: solve");
+
+        while (!abertos.isEmpty()) {
+            actual = abertos.poll();
+
+            if (actual.layout.isGoal(objective)) {
+                List<State> path = new ArrayList<>();
+                State nn = actual;
+                while (nn != null) {
+                    path.add(nn);
+                    nn = nn.father;
+                }
+
+                Collections.reverse(path);
+                return path.iterator();
+            }
+
+            sucs = sucessores(actual);
+            fechados.put(actual.layout, actual);
+
+            for (State st : sucs) {
+                if(!fechados.containsKey(st.layout) && !abertos.contains(st)) {
+                    abertos.add(st);
+                }
+            }
+        }
+
+        return null;
     }
 }
