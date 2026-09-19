@@ -1,5 +1,8 @@
 import java.util.*;
 
+/**
+ * Classe que implementa o algoritmo de procura Best-First
+ */
 class BestFirst {
     protected Queue<State> abertos;
     private Map<Ilayout, State> fechados;
@@ -11,6 +14,11 @@ class BestFirst {
         private State father;
         private double g;
 
+        /**
+         * Construtor da classe State
+         * @param l O layout do estado atual
+         * @param n O estado pai (pode ser null para o estado inicial)
+         */
         public State(Ilayout l, State n) {
             layout = l;
             father = n;
@@ -19,10 +27,35 @@ class BestFirst {
             else g = 0.0;
         }
 
-        public String toString() { return layout.toString(); }
-        public double getG() { return g; }
-        public int hashCode() { return toString().hashCode(); }
+        /**
+         * Retorna a representação em texto do estado
+         * @return String representando o layout
+         */
+        public String toString() {
+            return layout.toString();
+        }
 
+        /**
+         * Retorna o custo acumulado do estado
+         * @return O valor do custo g
+         */
+        public double getG() {
+            return g;
+        }
+
+        /**
+         * Calcula o código hash para o estado
+         * @return O valor de hash
+         */
+        public int hashCode() {
+            return toString().hashCode();
+        }
+
+        /**
+         * Compara se dois estados são iguais, baseando-se no seu layout
+         * @param o O objeto a ser comparado
+         * @return true se os estados forem iguais, false caso contrário
+         */
         public boolean equals(Object o) {
             if (o == null) return false;
             if (this.getClass() != o.getClass()) return false;
@@ -31,6 +64,11 @@ class BestFirst {
         }
     }
 
+    /**
+     * Gera e retorna a lista de estados sucessores para um determinado estado
+     * @param n O estado atual a partir do qual os sucessores são gerados
+     * @return Uma lista de objetos State que são filhos do estado atual
+     */
     final private List<State> sucessores(State n) {
         List<State> sucs = new ArrayList<>();
         List<Ilayout> children = n.layout.children();
@@ -43,6 +81,12 @@ class BestFirst {
         return sucs;
     }
 
+    /**
+     * Executa o algoritmo de procura para encontrar o caminho do estado inicial até ao objetivo
+     * @param s O layout do estado inicial
+     * @param goal O layout do estado objetivo
+     * @return Um iterador sobre a lista de estados que formam o caminho da solução ou null se não for encontrada nenhuma solução
+     */
     final public Iterator<State> solve(Ilayout s, Ilayout goal) {
         objective = goal;
 
